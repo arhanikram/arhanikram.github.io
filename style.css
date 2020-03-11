@@ -1,4 +1,66 @@
-body {
-	background-color: #000000;
+html{
+	backgound-color: #000000;
 	color: #FFF;
+}
+
+
+body {
+	background-color: #facff1;
+	color: #FFF;
+	text-align: center;
+}
+.main {
+   	text-align: center;
+	display: table;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	bottom: 5%;
+	color: #000000;
+	font-family: "Montserrat", serif;
+}
+
+.main .middle {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.main .inner {
+	margin-left: auto;
+	margin-right: auto; 
+	width: 100%;
+}
+
+.main .title {
+	font-family: "Montserrat", serif;
+	font-size: 400%;
+	text-shadow: 4px 4px 4px #aaa;
+}
+
+.main .subtitle {
+	padding: 2% 0;
+	line-height: 1.5;
+}
+
+.main .content {
+	font-size: 90%; 
+	line-height: 1.5;
+}
+.footer {
+	font-size: 125%; 
+	font-family: "Montserrat", serif;
+	background-color: #facff1;
+	color: #FFF;
+	text-align: center; 
+	position:absolute;
+	bottom:0;
+	width: 100%;
+	margin-top: 2.5%;
+	text-shadow: 4px 4px 4px #aaa;
+}
+
+.footer .links {
+	display: inline-block; 	
+	margin: 0 1%; 
+	line-height: 1.5;
 }
