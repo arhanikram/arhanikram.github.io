@@ -1,32 +1,349 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arhan Ikram | Software Developer</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
+    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
+    <link href="[https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Poiret+One&display=swap](https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;600;700&family=Poiret+One&display=swap)" rel="stylesheet">
+    
+    <!-- Tailwind CSS for rapid UI styling -->
+    <script src="[https://cdn.tailwindcss.com](https://cdn.tailwindcss.com)"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Josefin Sans', 'sans-serif'],
+                        title: ['Poiret One', 'sans-serif'],
+                    },
+                    colors: {
+                        pink: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f9a8d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777',
+                            700: '#be185d',
+                            800: '#9d174d',
+                            900: '#831843',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
 
-<html>
-	<head>
-		<link rel="stylesheet" type="text/css" href="style.css"></link>
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
-		<title>Arhan Ikram</title>
-	</head>
+    <!-- External CSS link -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="antialiased font-sans selection:bg-pink-300 selection:text-white h-[600vh]">
 
-	<body>
-		<div class="main">
-		    <div class="middle">
-			<div class="inner">
-			    <div class="title"> I K R A M </div>
-			    <div  class="subtitle">
-				I'm Arhan Ikram &mdash; a software developer enrolled at <br>
-				<a href="https://www.wlu.ca/">Wilfrid Laurier University</a>
-			    </div>
-			    <div class="content">
-				This is a website containing links to some of my work. <br>
-				Please take a look and feel free to contact me.
-			    </div>
-			</div>
-		    </div>
-		</div>
-		<div class="footer">
-			<div class="links"> <a href="mailto:arhan.ikram@gmail.com"> Email </a> </div>
-			<div class="links"> <a href="https://www.linkedin.com/in/arhan-ikram"> LinkedIn </a> </div>
-			<div class="links"> <a href="https://github.com/arhanikram"> GitHub </a> </div>
-		</div>
-	</body>
+    <!-- Persistent Contact Bar -->
+    <div class="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-[100] glass px-6 py-3 rounded-full flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 shadow-xl border border-white/60 backdrop-blur-md transition-all hover:bg-white/50">
+        <div class="flex items-center gap-6">
+            <a href="mailto:arhan.ikram@gmail.com" class="text-pink-900 hover:text-pink-600 font-bold text-xs tracking-widest uppercase transition flex items-center gap-2">
+                <span class="text-lg">✉️</span> <span class="hidden sm:inline">Email</span>
+            </a>
+            <a href="[https://www.linkedin.com/in/arhan-ikram](https://www.linkedin.com/in/arhan-ikram)" target="_blank" class="text-pink-900 hover:text-pink-600 font-bold text-xs tracking-widest uppercase transition flex items-center gap-2">
+                <span class="text-lg">💼</span> <span class="hidden sm:inline">LinkedIn</span>
+            </a>
+            <a href="[https://github.com/arhanikram](https://github.com/arhanikram)" target="_blank" class="text-pink-900 hover:text-pink-600 font-bold text-xs tracking-widest uppercase transition flex items-center gap-2">
+                <span class="text-lg">🐙</span> <span class="hidden sm:inline">GitHub</span>
+            </a>
+        </div>
+        <!-- Hidden on very small screens to save space -->
+        <p class="text-pink-900/40 font-bold tracking-widest text-[10px] hidden md:block border-l border-pink-900/20 pl-6">
+            © <span id="year"></span> ARHAN IKRAM
+        </p>
+    </div>
+
+    <!-- Reactive Background Layer with Blobs -->
+    <div class="reactive-bg" id="bg">
+        <!-- Dynamic Wandering Paw Prints Layer -->
+        <canvas id="paw-canvas" class="absolute inset-0 w-full h-full pointer-events-none"></canvas>
+        
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- The Animated Cats Container -->
+    <div id="cats-container" class="cats-facing-right">
+        <!-- Cat 1: Black with white paws -->
+        <div id="cat1" class="w-20 h-20 relative">
+            <svg viewBox="0 0 100 100" class="cat-svg w-full h-full drop-shadow-md overflow-visible">
+                <!-- Tail -->
+                <path d="M 80 60 Q 95 60 90 40" fill="none" stroke="#222" stroke-width="8" stroke-linecap="round"/>
+                <!-- Back Legs -->
+                <rect x="62" y="70" width="8" height="15" fill="#222" rx="4"/>
+                <rect x="76" y="70" width="8" height="15" fill="#222" rx="4"/>
+                <ellipse cx="66" cy="85" rx="7" ry="4" fill="#fff"/> <!-- White Paw -->
+                <ellipse cx="80" cy="85" rx="7" ry="4" fill="#fff"/> <!-- White Paw -->
+                <!-- Body -->
+                <rect x="30" y="45" width="55" height="35" rx="17" fill="#222"/>
+                <!-- Front Legs -->
+                <rect x="32" y="70" width="8" height="15" fill="#222" rx="4"/>
+                <rect x="46" y="70" width="8" height="15" fill="#222" rx="4"/>
+                <ellipse cx="36" cy="85" rx="7" ry="4" fill="#fff"/> <!-- White Paw -->
+                <ellipse cx="50" cy="85" rx="7" ry="4" fill="#fff"/> <!-- White Paw -->
+                <!-- Head -->
+                <circle cx="35" cy="35" r="22" fill="#222"/>
+                <!-- Ears -->
+                <polygon points="18,25 15,5 30,20" fill="#222"/>
+                <polygon points="52,25 55,5 40,20" fill="#222"/>
+                <polygon points="20,23 18,10 28,20" fill="#ff9ebd"/>
+                <polygon points="50,23 52,10 42,20" fill="#ff9ebd"/>
+                <!-- Eyes & Face -->
+                <ellipse cx="27" cy="35" rx="4" ry="6" fill="#fff"/>
+                <ellipse cx="43" cy="35" rx="4" ry="6" fill="#fff"/>
+                <circle cx="28" cy="36" r="2" fill="#000"/>
+                <circle cx="42" cy="36" r="2" fill="#000"/>
+                <polygon points="33,42 37,42 35,45" fill="#ff9ebd"/>
+                <path d="M 30 45 Q 35 48 40 45" fill="none" stroke="#666" stroke-width="1.5"/>
+            </svg>
+        </div>
+        <!-- Cat 2: White/Grey with patched legs -->
+        <div id="cat2" class="w-16 h-16 relative transform translate-y-1">
+            <svg viewBox="0 0 100 100" class="cat-svg w-full h-full drop-shadow-md overflow-visible">
+                <!-- Tail -->
+                <path d="M 80 60 Q 95 60 90 40" fill="none" stroke="#9ca3af" stroke-width="8" stroke-linecap="round"/>
+                <!-- Back Legs -->
+                <rect x="62" y="70" width="8" height="15" fill="#fff" rx="4"/>
+                <rect x="76" y="70" width="8" height="15" fill="#fff" rx="4"/>
+                <ellipse cx="66" cy="85" rx="7" ry="4" fill="#fff"/>
+                <ellipse cx="80" cy="85" rx="7" ry="4" fill="#fff"/>
+                <!-- Body -->
+                <rect x="30" y="45" width="55" height="35" rx="17" fill="#fff"/>
+                <!-- Grey Patch on Body -->
+                <path d="M 45 45 Q 60 40 70 55 Q 60 70 45 80 Z" fill="#e5e7eb"/>
+                <!-- Front Legs (One White, One Grey) -->
+                <rect x="32" y="70" width="8" height="15" fill="#fff" rx="4"/> <!-- White Leg -->
+                <rect x="46" y="70" width="8" height="15" fill="#9ca3af" rx="4"/> <!-- Grey Leg -->
+                <ellipse cx="36" cy="85" rx="7" ry="4" fill="#fff"/> <!-- White Paw -->
+                <ellipse cx="50" cy="85" rx="7" ry="4" fill="#9ca3af"/> <!-- Grey Paw -->
+                <!-- Head -->
+                <circle cx="35" cy="35" r="22" fill="#fff"/>
+                <!-- Grey patch on head -->
+                <path d="M 25 15 Q 40 10 50 30 Z" fill="#9ca3af"/>
+                <!-- Ears -->
+                <polygon points="18,25 15,5 30,20" fill="#fff"/>
+                <polygon points="52,25 55,5 40,20" fill="#9ca3af"/>
+                <polygon points="20,23 18,10 28,20" fill="#ff9ebd"/>
+                <polygon points="50,23 52,10 42,20" fill="#ff9ebd"/>
+                <!-- Eyes & Face -->
+                <ellipse cx="27" cy="35" rx="4" ry="6" fill="#000"/>
+                <ellipse cx="43" cy="35" rx="4" ry="6" fill="#000"/>
+                <circle cx="28" cy="34" r="1.5" fill="#fff"/>
+                <circle cx="42" cy="34" r="1.5" fill="#fff"/>
+                <polygon points="33,42 37,42 35,45" fill="#ff9ebd"/>
+                <path d="M 30 45 Q 35 48 40 45" fill="none" stroke="#9ca3af" stroke-width="1.5"/>
+            </svg>
+        </div>
+    </div>
+
+    <!-- Horizontal Scroll Sticky Container -->
+    <div class="scroll-container">
+        <div id="horizontal-wrap" class="horizontal-wrap">
+            <!-- Global Wavy Background for entire width -->
+            <svg id="wavy-svg">
+                <defs>
+                    <linearGradient id="pink-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#c792b8" />
+                        <stop offset="50%" stop-color="#b06b9d" />
+                        <stop offset="100%" stop-color="#783c68" />
+                    </linearGradient>
+                </defs>
+                <polyline id="wavy-line" class="wavy-line" points="" />
+            </svg>
+
+            <!-- Section 1: Intro -->
+            <section class="h-section px-4 z-10" id="intro">
+                <div class="glass p-10 md:p-16 lusion-block shadow-2xl max-w-3xl w-full transform transition hover:scale-[1.02] duration-300">
+                    <h1 class="text-6xl md:text-8xl font-title text-pink-700 tracking-[0.1em] mb-4 drop-shadow-sm uppercase font-bold">
+                        ARHAN IKRAM
+                    </h1>
+                    <div class="h-2 w-32 bg-pink-400 rounded-full mb-8"></div>
+                    <p class="text-xl md:text-3xl text-pink-900 font-light leading-relaxed mb-6">
+                        Program Manager with a background in Computer Science
+                    </p>
+                    
+                    <!-- Scroll indicator -->
+                    <div class="mt-8 animate-bounce text-pink-500 inline-block">
+                        <span class="text-sm font-semibold tracking-widest uppercase block mb-2">Scroll</span>
+                        <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 2: Journey Node 1 & 2 -->
+            <section class="h-section px-4 z-10 gap-10 md:gap-32" id="journey-1">
+                <!-- Laurier Node -->
+                <div class="laurier-arch shadow-2xl w-[85vw] md:w-[40vw] max-w-md p-10 transform -translate-y-20 flex flex-col items-center text-center">
+                    <div class="mb-5 bg-[#330072] border-2 border-[#F2A900] p-4 rounded-full shadow-lg w-24 h-24 flex items-center justify-center overflow-hidden">
+                        <!-- Custom Laurier Golden Hawks Logo from Upload -->
+                        <img src="images/laurier.webp" alt="Laurier Golden Hawks Logo" class="w-full h-full object-contain drop-shadow-sm">
+                    </div>
+                    <h3 class="font-bold text-4xl mb-2 uppercase tracking-widest">Wilfrid Laurier</h3>
+                    <h4 class="font-semibold text-xl mb-4 text-[#e5d5f1]">University</h4>
+                    <div class="h-1 w-16 bg-[#F2A900] rounded-full mb-4"></div>
+                    <p class="font-semibold mb-3 text-lg text-[#F2A900]">B.S. Computer Science</p>
+                    <p class="text-[#e5d5f1]/90 text-lg leading-relaxed font-light">
+                        Built a strong foundation in computer science principles, algorithms, and innovative software engineering methodologies.
+                    </p>
+                </div>
+
+                <!-- Blackberry Node -->
+                <div class="bb-block lusion-block shadow-2xl w-[85vw] md:w-[40vw] max-w-md p-10 transform translate-y-32">
+                    <div class="flex items-center gap-5 mb-5">
+                        <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center shadow-lg border-2 border-zinc-600 overflow-hidden p-2">
+                            <!-- BlackBerry Logo -->
+                            <img src="images/blackberrylogo.png" alt="BlackBerry Logo" class="w-full h-full object-contain">
+                        </div>
+                        <h3 class="font-bold text-3xl tracking-wider uppercase">BlackBerry</h3>
+                    </div>
+                    <p class="text-gray-300 font-semibold mb-3 text-xl">Enterprise Tech Support</p>
+                    <p class="text-gray-400 text-lg leading-relaxed font-light">
+                        A vital pitstop in my tech journey. Provided critical technical support and analysis for secure enterprise software solutions in a fast-paced environment.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 3: Journey Node 3 & 4 -->
+            <section class="h-section px-4 z-10 gap-10 md:gap-32" id="journey-2">
+                <!-- Designware Node -->
+                <div class="dw-block lusion-block shadow-2xl w-[85vw] md:w-[40vw] max-w-md p-10 transform -translate-y-24">
+                    <div class="flex items-center gap-5 mb-5">
+                        <div class="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-3xl shadow-lg border border-white/40 overflow-hidden">
+                            <span class="text-3xl">✨</span>
+                        </div>
+                        <h3 class="font-bold text-3xl tracking-wider uppercase">Designware</h3>
+                    </div>
+                    <p class="text-white font-semibold mb-3 text-xl">Software Developer</p>
+                    <p class="text-white/90 text-lg leading-relaxed font-light">
+                        Developed dynamic web applications utilizing Vue.js and JavaScript. This colourful experience sparked my deep love for creating intuitive user experiences.
+                    </p>
+                </div>
+
+                <!-- OTTO Motors Node -->
+                <div class="otto-block lusion-block shadow-2xl w-[85vw] md:w-[40vw] max-w-md p-10 transform translate-y-24">
+                    <div class="flex items-center gap-5 mb-5">
+                        <div class="w-16 h-16 rounded-full bg-zinc-800 flex items-center justify-center shadow-lg border border-red-500/50 overflow-hidden p-2">
+                            <!-- OTTO Motors Logo -->
+                            <img src="images/OTTOLogo.png" alt="OTTO Motors Logo" class="w-full h-full object-contain">
+                        </div>
+                        <h3 class="font-bold text-3xl tracking-wider uppercase">OTTO Motors</h3>
+                    </div>
+                    <p class="text-red-400 font-semibold mb-3 text-xl">Program Manager</p>
+                    <p class="text-gray-400 text-lg leading-relaxed font-light">
+                        Managing complex programs at OTTO by Rockwell Automation. Pushing the boundaries of Autonomous Mobile Robots (AMRs) and automation on the factory floor.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Section 4: Gateway & Playground -->
+            <section class="h-section px-4 z-10 flex-col justify-center relative" id="playground">
+                <div class="w-full max-w-5xl relative flex flex-col items-center">
+                    
+                    <!-- Gateway View -->
+                    <div id="games-gateway" class="flex flex-col items-center justify-center w-full transition-all duration-500">
+                        <h2 class="text-5xl md:text-7xl font-black text-center text-pink-800 mb-6 drop-shadow-md leading-tight">
+                            You have found the <br><span class="text-pink-600">cool kids area.</span>
+                        </h2>
+                        <p class="text-center text-pink-900 font-semibold mb-12 text-2xl md:text-3xl">Wanna play some games?</p>
+                        <button onclick="revealGames()" class="px-12 py-5 bg-pink-500 text-white rounded-full font-bold text-2xl hover:bg-pink-600 transition shadow-xl hover:shadow-2xl hover:-translate-y-2 transform border-4 border-pink-400">
+                            Yes!
+                        </button>
+                    </div>
+
+                    <!-- Games View (Hidden initially) -->
+                    <div id="games-list" class="hidden flex-col items-center justify-center w-full mt-4">
+                        <h2 class="text-6xl font-black text-center text-pink-800 mb-6 drop-shadow-md">The Playground</h2>
+                        <p class="text-center text-pink-900 font-medium mb-12 max-w-xl mx-auto text-xl">Take a break! Click on a card below to play.</p>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 w-full">
+                            <!-- Tic Tac Toe Card -->
+                            <div onclick="openGame('ttt')" class="glass lusion-block p-10 cursor-pointer transform transition hover:-translate-y-3 hover:shadow-2xl flex flex-col items-center text-center group border-4 border-transparent hover:border-pink-300">
+                                <div class="text-7xl mb-4 group-hover:rotate-12 transition duration-500">❌⭕</div>
+                                <h3 class="text-3xl font-black text-pink-800 mb-3">Tic Tac Toe</h3>
+                                <p class="text-pink-800/90 font-medium text-lg">The classic game of X's and O's. Play against a friend locally!</p>
+                                <button class="mt-8 px-8 py-4 bg-pink-500 text-white rounded-full font-extrabold hover:bg-pink-600 transition shadow-lg text-lg">Play Now</button>
+                            </div>
+
+                            <!-- Snake Card -->
+                            <div onclick="openGame('snake')" class="glass lusion-block p-10 cursor-pointer transform transition hover:-translate-y-3 hover:shadow-2xl flex flex-col items-center text-center group border-4 border-transparent hover:border-pink-300">
+                                <div class="text-7xl mb-4 group-hover:-rotate-12 transition duration-500">🐍🍎</div>
+                                <h3 class="text-3xl font-black text-pink-800 mb-3">Snake</h3>
+                                <p class="text-pink-800/90 font-medium text-lg">Guide the snake, eat the apples, and try not to hit the walls!</p>
+                                <button class="mt-8 px-8 py-4 bg-pink-500 text-white rounded-full font-extrabold hover:bg-pink-600 transition shadow-lg text-lg">Play Now</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- ================= GAME MODALS ================= -->
+
+    <!-- Tic Tac Toe Modal -->
+    <div id="modal-ttt" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-pink-900/40 backdrop-blur-sm" onclick="closeGame('ttt')"></div>
+        <!-- Content -->
+        <div class="glass relative z-10 lusion-block p-8 max-w-sm w-full shadow-2xl bg-white/80">
+            <button onclick="closeGame('ttt')" class="absolute top-6 right-6 text-pink-500 hover:text-pink-700 text-3xl font-bold leading-none">×</button>
+            <h3 class="text-3xl font-bold text-center text-pink-800 mb-2">Tic Tac Toe</h3>
+            <p id="ttt-status" class="text-center text-pink-600 font-semibold mb-6 text-lg">Player X's Turn</p>
+            
+            <div class="ttt-grid mb-6" id="ttt-board">
+                <!-- Generated by JS -->
+            </div>
+            
+            <button onclick="initTTT()" class="w-full py-4 bg-pink-500 text-white rounded-full font-bold hover:bg-pink-600 transition shadow-md">
+                Restart Game
+            </button>
+        </div>
+    </div>
+
+    <!-- Snake Modal -->
+    <div id="modal-snake" class="modal fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-pink-900/40 backdrop-blur-sm" onclick="closeGame('snake')"></div>
+        <!-- Content -->
+        <div class="glass relative z-10 lusion-block p-6 md:p-8 max-w-md w-full shadow-2xl bg-white/80 flex flex-col items-center">
+            <button onclick="closeGame('snake')" class="absolute top-6 right-6 text-pink-500 hover:text-pink-700 text-3xl font-bold leading-none">×</button>
+            <h3 class="text-3xl font-bold text-center text-pink-800 mb-2">Snake</h3>
+            <div class="flex justify-between w-full px-4 mb-4">
+                <span class="text-pink-700 font-bold">Score: <span id="snake-score">0</span></span>
+                <span class="text-pink-700 font-bold">High: <span id="snake-high">0</span></span>
+            </div>
+            
+            <!-- Canvas Container for responsiveness -->
+            <div class="relative w-full aspect-square max-w-[300px] mb-4">
+                <canvas id="snake-canvas" width="300" height="300" class="absolute inset-0 w-full h-full"></canvas>
+                
+                <!-- Game Over Overlay -->
+                <div id="snake-overlay" class="absolute inset-0 bg-white/80 backdrop-blur-sm flex flex-col items-center justify-center rounded-2xl hidden">
+                    <h4 class="text-2xl font-bold text-pink-700 mb-2">Game Over!</h4>
+                    <button onclick="startSnake()" class="px-6 py-2 bg-pink-500 text-white rounded-full font-bold hover:bg-pink-600 transition">Play Again</button>
+                </div>
+            </div>
+
+            <!-- Mobile Controls Note -->
+            <p class="text-sm text-pink-600/80 text-center mb-2 font-medium">Use Arrow Keys or Swipe on the canvas to play!</p>
+        </div>
+    </div>
+
+    <!-- External Script link -->
+    <script src="script.js"></script>
+</body>
 </html>
